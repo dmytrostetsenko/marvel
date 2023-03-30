@@ -6,7 +6,7 @@ const Banner = () => {
     return ( 
         <div class="app__banner">
             <img src={avengers} alt="Avengers" />
-            <div class="app__banner-text">
+            <div className="app__banner-text">
                 New comics every week!<br />
                 Stay tuned!
             </div>
