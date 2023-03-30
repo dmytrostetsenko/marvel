@@ -6,9 +6,6 @@ import './randomChar.scss'
 import ErrorMassage from '../errorMassage/ErrorMassage';
 
 class RandomChar extends Component{
-    constructor(props) {
-        super(props);
-    }
     state = {
         char: {},
         loading: true,
@@ -23,6 +20,11 @@ class RandomChar extends Component{
             loading: false
         });
     }
+    onCharLoading = () => {
+        this.setState({
+            loading: true
+        })
+    }
 
     onCharError = () => {
         this.setState({
@@ -32,6 +34,7 @@ class RandomChar extends Component{
     }
     updateChar = () => {
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000)
+        this.onCharLoading();
         this.marvelService
             .getCharacter(id)
             .then(this.onCharLoaded)
@@ -39,7 +42,7 @@ class RandomChar extends Component{
     }
 
     componentDidMount() {
-        this.updateChar();
+        // this.updateChar();
     }
 
 
