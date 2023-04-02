@@ -42,7 +42,7 @@ class RandomChar extends Component{
     }
 
     componentDidMount() {
-        // this.updateChar();
+        this.updateChar();
     }
 
 
