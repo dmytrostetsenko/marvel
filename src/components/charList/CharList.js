@@ -28,6 +28,7 @@ const CharList = (props) => {
         setOffset(offset => offset + 9);
     }
 
+
      const itemRefs = useRef([])
         
     const onFocusChar = (id) =>{
