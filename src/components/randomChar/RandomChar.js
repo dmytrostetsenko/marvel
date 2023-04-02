@@ -1,76 +1,69 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import MarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import mjolnir from '../../assets/img/mjolnir.png'
 import './randomChar.scss'
 import ErrorMassage from '../errorMassage/ErrorMassage';
 
-class RandomChar extends Component{
-    state = {
-        char: {},
-        loading: true,
-        error: false
-    };
+const RandomChar = () => {
+    const [char, setChar] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
-    marvelService = new MarvelService();
+   const  marvelService = new MarvelService();
 
-    onCharLoaded = (char) => {
-        this.setState({
-            char,
-            loading: false
-        });
+    const onCharLoaded = (char) => {
+        setChar(char);
+        setLoading(false);
     }
-    onCharLoading = () => {
-        this.setState({
-            loading: true
-        })
+    const onCharLoading = () => {
+        setLoading(true);
     }
 
-    onCharError = () => {
-        this.setState({
-            loading: false,
-            error: true
-            })
+    const onCharError = () => {
+        setLoading(false);
+        setError(true);
     }
-    updateChar = () => {
+    const updateChar = () => {
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000)
-        this.onCharLoading();
-        this.marvelService
+        onCharLoading();
+        marvelService
             .getCharacter(id)
-            .then(this.onCharLoaded)
-            .catch(this.onCharError)
+            .then(onCharLoaded)
+            .catch(onCharError)
     }
 
-    componentDidMount() {
-        this.updateChar();
-    }
+    useEffect(() => {
+        updateChar();
+        // const intervalId = setInterval(updateChar, 10000)
+        // return () => {
+        //     clearInterval(intervalId)
+        // }
+    }, [])
 
-
-    render(){
-        const errorMassage = this.state.error ? <ErrorMassage /> : null;
-        const spinner = this.state.loading ? <Spinner /> : null;
-        const content = !(this.state.error || this.state.loading) ? <View char={this.state.char} /> : null;
-        return ( 
-            <div className="randomchar">
-                {errorMassage}
-                {spinner}
-                {content}
-                <div className="randomchar__static">
-                    <p className="randomchar__title">
-                        Random character for today!<br/>
-                        Do you want to get to know him better?
-                    </p>
-                    <p className="randomchar__title">
-                        Or choose another one
-                    </p>
-                    <button className="button button__main" onClick={this.updateChar}>
-                        <div className="inner">try it</div>
-                    </button>
-                    <img src={mjolnir} alt="mjolnir" className="randomchar__decoration"/>
-                </div>
+    const errorMassage = error ? <ErrorMassage /> : null;
+    const spinner = loading ? <Spinner /> : null;
+    const content = !(error || loading) ? <View char={char} /> : null;
+    return ( 
+        <div className="randomchar">
+            {errorMassage}
+            {spinner}
+            {content}
+            <div className="randomchar__static">
+                <p className="randomchar__title">
+                    Random character for today!<br/>
+                    Do you want to get to know him better?
+                </p>
+                <p className="randomchar__title">
+                    Or choose another one
+                </p>
+                <button className="button button__main" onClick={updateChar}>
+                    <div className="inner">try it</div>
+                </button>
+                <img src={mjolnir} alt="mjolnir" className="randomchar__decoration"/>
             </div>
-         );
-    }
+        </div>
+     );
 }
 
 const View = ({char}) =>{
