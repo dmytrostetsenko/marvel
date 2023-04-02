@@ -7,39 +7,25 @@ import './charList.scss'
 
 const CharList = (props) => {
     const [chars, setChars] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
     const [newItemLoading, setNewItemLoading] = useState(false);
     const [offset, setOffset] = useState(210);
 
-    const marvelService = new MarvelService();
+    const {error, loading, getAllCharacters} = MarvelService();
 
     useEffect(() => {
-        onRequest();
+        onRequest(offset, true);
     }, [])
 
 
-    const onRequest = (offset) => {
-        onCharsLoading();
-        marvelService.getAllCharacters(offset)
-        .then(onCharsLoaded)
-        .catch(onError)
+    const onRequest = (offset, initial) => {
+        initial ? setNewItemLoading(false) : setNewItemLoading(true)
+        getAllCharacters(offset).then(onCharsLoaded)
     }
     
-    const onCharsLoading = () => {
-        setNewItemLoading(true)
-    }
-
     const onCharsLoaded = (newChars) => {
         setChars(chars => [...chars, ...newChars]);
-        setLoading(false);
         setNewItemLoading(false);
         setOffset(offset => offset + 9);
-    }
-
-    const onError = () => {
-        setLoading(false);
-        setError(true)
     }
 
      const itemRefs = useRef([])
@@ -80,11 +66,10 @@ const CharList = (props) => {
 
     const items = charRender(chars);
     const errorMessage = error ? <ErrorMassage/> : null;
-    const spinner = loading ? <Spinner/> : null;
-    const content = !(error || loading) ? items : null;
+    const spinner = loading && !newItemLoading ? <Spinner/> : null;
     return (
         <div className="char__list">
-            {content}
+            {items}
             {spinner}
             {errorMessage}
             <button 

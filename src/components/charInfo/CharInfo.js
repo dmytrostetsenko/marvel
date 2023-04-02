@@ -8,37 +8,26 @@ import './charInfo.scss'
 const CharInfo = (props) => {
 
     const [char, setChar] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
 
-    const marvelService = new MarvelService();
+
+    const {loading, error, clearError, getCharacter} = MarvelService();
 
     const updateChar = () =>{
         const {charId} = props;
         if(!charId){
             return;
         }
-        onCharLoading();
-        marvelService
-            .getCharacter(charId)
-            .then(onCharLoaded)
-            .catch(onCharError);
+        clearError();
+        getCharacter(charId).then(onCharLoaded)
     }
+
+    const onCharLoaded = (char) => {
+        setChar(char)
+    }
+
     useEffect(() =>{
         updateChar();
     },[props.charId])
-    const onCharLoaded = (char) => {
-        setChar(char)
-        setLoading(false)
-    }
-   const onCharLoading = () => {
-        setLoading(true);
-    }
-
-    const onCharError = () => {
-        setLoading(false);
-        setError(true)
-    }
 
     const skeleton = error || loading || char ? null : <Skeleton />
     const errorMassage = error ? <ErrorMassage /> : null;
