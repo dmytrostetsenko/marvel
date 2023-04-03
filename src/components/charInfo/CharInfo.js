@@ -4,6 +4,7 @@ import ErrorMassage from '../errorMassage/ErrorMassage';
 import Spinner from '../spinner/Spinner';
 import Skeleton from '../skeleton/Skeleton';
 import './charInfo.scss'
+import { Link } from 'react-router-dom';
 
 const CharInfo = (props) => {
 
@@ -68,10 +69,11 @@ const View = ({char}) => {
                 {char.comics.length > 0 ? null : 'There is no comics with this character'}
                 {char.comics.map((item, i) => {
                     if(i > 9) return;
+                    const comicId = item.resourceURI.slice(item.resourceURI.lastIndexOf('/') + 1)
                     return (
-                        <li className="char__comics-item" key={i}>
+                        <Link to={`/comics/${comicId}`} className="char__comics-item" key={i}>
                             {item.name}
-                        </li>
+                        </Link>
                     )
                 })}
             </ul>
