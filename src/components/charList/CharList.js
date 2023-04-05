@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import MarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import ErrorMassage from '../errorMassage/ErrorMassage';
@@ -45,23 +46,28 @@ const CharList = (props) => {
             }
             
             return (
-                <li 
-                    className="char__item"
-                    key={item.id}
-                    ref={el => itemRefs.current[i] = el}
-                    onClick={() => {
-                        props.onCharSelected(item.id)
-                        onFocusChar(i)
-                    }}
-                >
-                        <img src={item.thumbnail} alt={item.name} style={imgStyle}/>
-                        <div className="char__name">{item.name}</div>
-                </li>
+                <CSSTransition key={item.id} timeout={500} classNames="char__item">
+                    <li 
+                        className="char__item"
+                        key={item.id}
+                        ref={el => itemRefs.current[i] = el}
+                        onClick={() => {
+                            props.onCharSelected(item.id)
+                            onFocusChar(i)
+                        }}
+                    >
+                            <img src={item.thumbnail} alt={item.name} style={imgStyle}/>
+                            <div className="char__name">{item.name}</div>
+                    </li>
+                </CSSTransition>
+
             );
         });
         return (
             <ul className="char__grid">
-                {chars}
+                <TransitionGroup component={null}>
+                    {chars}
+                </TransitionGroup>
             </ul>
         )
     }
