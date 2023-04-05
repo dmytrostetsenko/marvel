@@ -29,11 +29,12 @@ const CharList = (props) => {
     }
 
 
-     const itemRefs = useRef([])
-        
+    const itemRefs = useRef([])
     const onFocusChar = (id) =>{
-        itemRefs.current.forEach(item => item.classList.remove('char__item_selected'));
-        itemRefs.current[id].classList.add('char__item_selected');
+        if(props.isLargeScreen){
+            itemRefs.current.forEach(item => item.classList.remove('char__item_selected'));
+            itemRefs.current[id].classList.add('char__item_selected');
+        }
     }
 
     function charRender (array) {
