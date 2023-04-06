@@ -23,16 +23,15 @@ const HomePage = () => {
         <>
             <RandomChar />
             <div className="char__content">
-                    <CharList onCharSelected={onCharSelected} isLargeScreen={isLargeScreen} />
+                    <div>
+                        <CharSearchForm onCharSelected={onCharSelected} />
+                        <CharList onCharSelected={onCharSelected} isLargeScreen={isLargeScreen} />
+                    </div>
                     {
                         isLargeScreen ? 
-                        <div>
-                            <CharInfo charId ={selectedChar}/>
-                            <CharSearchForm />
-                        </div> :
+                        <CharInfo charId ={selectedChar}/> :
                         <Modal showModal={showModal} setShowModal={setShowModal}>
                             <CharInfo charId ={selectedChar} />
-                            <CharSearchForm />
                         </Modal>
                     }
             </div>
