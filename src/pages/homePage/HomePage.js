@@ -4,6 +4,7 @@ import RandomChar from '../../components/randomChar/RandomChar';
 import CharList from '../../components/charList/CharList';
 import CharInfo from '../../components/charInfo/CharInfo';
 import Modal from '../../components/modal/Modal';
+import CharSearchForm from '../../components/charSearchForm/CharSearchForm';
 import decoration from '../../assets/img/vision.png';
 
 
@@ -25,9 +26,13 @@ const HomePage = () => {
                     <CharList onCharSelected={onCharSelected} isLargeScreen={isLargeScreen} />
                     {
                         isLargeScreen ? 
-                        <CharInfo charId ={selectedChar}/> :
+                        <div>
+                            <CharInfo charId ={selectedChar}/>
+                            <CharSearchForm />
+                        </div> :
                         <Modal showModal={showModal} setShowModal={setShowModal}>
                             <CharInfo charId ={selectedChar} />
+                            <CharSearchForm />
                         </Modal>
                     }
             </div>
