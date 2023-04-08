@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import Header from './components/header/Header';
+import Footer from './components/footer/Footer';
 import ComicsPage from './pages/comicsPage/ComicsPage';
 import SingleComicPage from './pages/singleComicPage/SingleComicPage';
 import HomePage from './pages/homePage/HomePage';
@@ -18,6 +19,7 @@ const App = () => {
                         <Route path='*' element={<Page404 />} />
                     </Routes>
                 </main>
+                <Footer />
         </div>
     );
 }

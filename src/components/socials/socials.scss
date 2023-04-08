@@ -1,0 +1,20 @@
+@import '../../style/library.scss';
+
+.socials{
+    display: flex;
+    gap: 30px;
+    &__link svg path{
+        transition: all .3s ease-in;
+    }
+    &__link:hover svg path{
+        fill: $main-color;
+    }
+}
+
+@media screen and (max-width: $medium-down) {
+    .socials{
+        &__link:hover svg path{
+            fill: $grey;
+        }
+    }
+}

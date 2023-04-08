@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import Socials from "../socials/Socials";
 
 import './menu.scss'
 
@@ -54,6 +55,7 @@ const Menu = () => {
                             </NavLink>
                         </li>
                     </ul>
+                    <Socials />
                 </div>
             </div>
         </>

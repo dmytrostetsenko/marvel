@@ -52,7 +52,6 @@ const RandomChar = () => {
 }
 
 const View = ({data}) =>{
-    console.log(data);
     const {name, description, thumbnail, homepage, wiki} = data;
     return(
         <div className="randomchar__block">

@@ -9,6 +9,9 @@
         line-height: 32px;
         li {
             margin: 0 8px;
+            a{
+                transition: all .3s ease-in;
+            }
             a:hover {
                 color: $main-color;
             }
@@ -16,6 +19,9 @@
     }
     &__link_active{
         color: $main-color;
+    }
+    .socials{
+        display: none;
     }
 }
 
@@ -32,6 +38,10 @@
         align-items: end;
         flex-direction: column;
         z-index: 5;
+        .socials{
+            display: flex;
+            justify-content: center;
+        }
         &_open{
             transform: translateX(0);
         }
@@ -41,13 +51,20 @@
             height: 100%;
             background-color: #fff;
             display: flex;
-            flex-direction: column
+            flex-direction: column;
+            justify-content: space-between;
+            
         }
         &__list{
             display: flex;
             flex-direction: column;
             gap: 30px;
             align-items: center;
+            li {
+                a:hover:not(.menu__link_active) {
+                    color: $dark;
+                }
+            }
         }
     }
     .burger{
