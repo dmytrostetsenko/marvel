@@ -1,39 +1,60 @@
 @import '../../style/library.scss';
 .single-comic {
     margin-top: 50px;
-    display: grid;
-    grid-template-columns: 293px 550px auto;
-    column-gap: 50px;
+    display: flex;
+    gap: 30px;
     align-items: start;
     &__img {
         width: 293px;
         height: 450px;
-        object-fit: cover;
+        object-fit: fill;
     }
     &__name {
         font-weight: bold;
-        font-size: 22px;
-        line-height: 29px;
+        font-size: 1.375rem;
+        line-height: 1.318;
     }
     &__descr {
-        font-size: 18px;
-        line-height: 24px;
+        font-size: 1.125rem;
+        line-height: 1.3333;
         margin-top: 25px;
     }
     &__price {
         font-weight: bold;
-        font-size: 24px;
-        line-height: 32px;
+        font-size: 1.375rem;
+        line-height: 1.454;
         color: $main-color;
         margin-top: 25px;
     }
     &__back {
-        justify-self: end;
+        flex: 1 0 90px;
         font-weight: bold;
-        font-size: 18px;
-        line-height: 24px;
+        font-size: 1.125rem;
+        line-height: 1.3333;
         &:hover {
             color: $main-color;
+        }
+    }
+}
+
+@media screen and  (max-width: $medium-down) {
+    .single-comic{
+        flex-direction: column;
+        &__img{
+            align-self: center;
+        }
+        &__back{
+            align-self: flex-end;
+            color: $main-color;
+        }
+    }
+}
+
+@media screen and (max-width: $small-down){
+    .single-comic{
+        &__img{
+            width: 250px;
+            height: 350px;
         }
     }
 }

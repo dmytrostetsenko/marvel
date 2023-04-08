@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 import './menu.scss'
@@ -7,13 +7,20 @@ const Menu = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     const openMenu = () => {
-        document.body.classList.add('_lock')
         setIsMenuOpen(!isMenuOpen)
     }
     const closeMenu = () =>{
-        document.body.classList.remove('_lock')
         setIsMenuOpen(false)
     }
+
+    useEffect(() => {
+        if (isMenuOpen) {
+            document.body.classList.add('_lock');
+        } else {
+            document.body.classList.remove('_lock');
+        }
+    }, [isMenuOpen]);
+    
     return ( 
         <>
             <div 

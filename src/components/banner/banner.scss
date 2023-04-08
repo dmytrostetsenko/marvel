@@ -4,16 +4,41 @@
         width: 100%;
         background-color: $dark;
         height: 100px;
-        padding: 0 25px 0 45px;
-        display: grid;
-        grid-template-columns: 152px auto 133px;
+        padding: 0 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+
         &-text {
             font-weight: bold;
-            font-size: 24px;
-            line-height: 32px;
+            font-size: 1.5rem;
+            line-height: 1.33333;
             color: #FFFFFF;
-            padding-left: 83px;
-            padding-top: 18px;
+        }
+    }
+}
+
+
+@media screen and (max-width: $medium-down) {
+    .app{
+        &__banner{
+            padding: 0 5px;
+            img{
+                width: 100px;
+                align-self: flex-end;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $small-down) {
+    .app{
+        &__banner{
+            padding: 0 5px;
+            img{
+                width: 60px;
+            }
         }
     }
 }

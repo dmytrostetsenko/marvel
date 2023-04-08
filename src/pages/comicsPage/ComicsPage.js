@@ -3,10 +3,14 @@ import ComicList from '../../components/comicList/ComicList'
 
 const ComicsPage = () => {
     return ( 
-        <>
-            <Banner />
-            <ComicList />
-        </>
+        <section>
+            <div className="container">
+                <div className="comics">
+                    <Banner />
+                    <ComicList />
+                </div>
+            </div>
+        </section>
      );
 }
  

@@ -1,9 +1,12 @@
+@import '../../style/library.scss';
+
 .error-page{
     text-align: center;
     font-weight: 700;
     font-size: 24px;
     &__link{
         display: block;
+        color: $main-color;
         text-align: center;
         font-weight: 700;
         font-size: 24px;
