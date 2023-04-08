@@ -3,28 +3,34 @@
 .char {
     &__content {
         margin-top: 50px;
-        display: grid;
-        grid-template-columns: 60% 40%;
-        column-gap: 25px;
-        align-items: start;
+        display: flex;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    &__block{
+        flex: 0 1 75%;
+    }
+    &__list{
+        width: 100%;
     }
     &__grid {
+        width: 100%;
         display: grid;
-        grid-template-columns: repeat(3, 33.33%);
-        column-gap: 25px;
+        grid-template-columns: repeat(3, 1fr);
+        justify-items: center;
         row-gap: 30px;
     }
     &__item {
-        width: 200px;
-        height: 318px;
+        width: 170px;
+        height: 280px;
         background-color: $dark;
         box-shadow: 5px 5px 10px rgba(0, 0, 0, .25);
         padding: 15px;
         cursor: pointer;
         transition: 0.3s transform;
         img {
-            width: 200px;
-            height: 200px;
+            width: 170px;
+            height: 170px;
             object-fit: cover;
             transform: translate(-15px, -15px);
         }
@@ -35,9 +41,35 @@
     }
     &__name {
         font-weight: bold;
-        font-size: 22px;
-        line-height: 29px;
+        font-size: 1.125rem;
+        line-height: 1.25;
         text-transform: uppercase;
         color: #fff;
+    }
+}
+
+@media screen and (max-width: $large-down) {
+    .char{
+
+        &__block{
+            flex: 0 1 100%;
+        }
+    }
+}
+
+@media screen and (max-width: $medium-down) {
+    .char{
+
+        &__grid{
+            grid-template-columns: repeat(2, 1fr);
+        }
+        &__item{
+            width: 140px;
+            height: 250px;
+            & img{
+                width: 140px;
+                height: 140px;
+            }
+        }
     }
 }

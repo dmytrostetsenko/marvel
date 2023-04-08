@@ -45,7 +45,7 @@ const View = ({data}) => {
                 <img src={thumbnail} alt={name}/>
                 <div>
                     <div className="char__info-name">{name}</div>
-                    <div className="char__btns">
+                    <div className="char__info-btns">
                         <a href={homepage} className="button button__main">
                             <div className="inner">homepage</div>
                         </a>

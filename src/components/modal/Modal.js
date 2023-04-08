@@ -4,7 +4,7 @@ const Modal = ({showModal, setShowModal, children}) => {
         setShowModal(false);
     }
     return(
-        <div className={showModal ? 'modal modal_active' : 'modal'} onClick={() => closeModal()}>
+        <div className={showModal ? 'modal modal_active' : 'modal'} onClick={closeModal}>
             <div className="modal__content" onClick={(e) => e.stopPropagation()}>
                 {children}
             </div>

@@ -1,54 +1,55 @@
 @import '../../style/library.scss';
 
 .randomchar {
-    display: grid;
-    grid-template-columns: repeat(2, 50%);
-    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.25);
-    align-items: center;
+    &__content{
+        display: flex;
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.25);
+    }
     &__block {
-        padding: 40px 35px;
-        display: grid;
-        grid-template-columns: 180px auto;
-        column-gap: 30px;
-    }
-    &__img {
-        width: 180px;
-        height: 180px;
-        object-fit: contain;
-    }
-    &__info {
-        display: grid;
-        grid-template-rows: minmax(29px, auto) 90px 38px;
-        row-gap: 10px;
-        padding-top: 3px;
-    }
-    &__name {
-        font-weight: bold;
-        font-size: 22px;
-        line-height: 29px;
-        text-transform: uppercase;
-    }
-    &__descr {
-        font-size: 14px;
-        line-height: 18px;
-    }
-    &__btns {
-        a:nth-child(1) {
-            margin-right: 30px;
-        }
+        flex: 0 1 50%;
+        padding: 30px;
+        display: flex;
+        gap: 30px;
     }
     &__static {
-        padding: 40px 35px;
+        flex: 0 1 50%;
+        padding: 30px;
         background-color: $dark;
         position: relative;
         button {
             margin-top: 13px;
         }
     }
+    &__img {
+        width: 180px;
+        height: 180px;
+        object-fit: cover;
+    }
+    &__info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-top: 3px;
+    }
+    &__name {
+        font-weight: bold;
+        font-size: 1.375rem;
+        line-height: 1.318;
+        text-transform: uppercase;
+    }
+    &__descr {
+        height: 90px;
+        font-size: 0.875rem;
+        line-height: 1.286;
+    }
+    &__btns {
+        display: flex;
+        justify-content: space-between;
+    }
     &__title {
         font-weight: bold;
-        font-size: 24px;
-        line-height: 32px;
+        font-size: 1.5rem;
+        line-height: 1.3333;
         letter-spacing: -0.045em;
         color: #FFFFFF;
         &:nth-child(2) {
@@ -61,3 +62,62 @@
         right: -37px;
     }
 }
+
+@media screen and (max-width: $large-down) {
+    .randomchar{
+        &__content{
+            flex-direction: column-reverse;
+        }
+        &__btns{
+            justify-content: start;
+            gap: 20px;
+        }
+    }
+}
+
+@media screen and (max-width: $medium-down) {
+    .randomchar{
+        &__content{
+            flex-direction: column-reverse;
+        }
+        &__btns{
+            justify-content: start;
+            gap: 20px;
+        }
+        &__img{
+            height: 120px;
+            width: 120px;
+        }
+        &__descr{
+            height: 100px;
+        }
+        &__title:nth-child(2){
+            margin-top: 15px;
+        }
+        &__decoration{
+            height: 100px;
+            right: 0;
+        }
+    }
+}
+@media screen and (max-width: $small-down){
+    .randomchar{
+
+        &__block{
+            padding: 15px;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        &__static{
+            padding: 15px;
+        }
+        &__img{
+            width: 160px;
+        }
+        &__decoration{
+            height: 60px;
+        }
+    }
+}
+
