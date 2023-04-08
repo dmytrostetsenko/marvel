@@ -8,7 +8,7 @@ import './charSearchForm.scss'
 
 const CharSearchForm = ({onCharSelected}) => {
     const [char, setChar] = useState(null);
-    const {loading, error, getCharacterByName, clearError} = MarvelService();
+    const {process, setProcess, getCharacterByName, clearError} = MarvelService();
 
     const onCharLoaded = (char) => {
         setChar(char)
@@ -19,10 +19,12 @@ const CharSearchForm = ({onCharSelected}) => {
 
     const updateChar = (name) => {
         clearError();
-        getCharacterByName(name).then(onCharLoaded)
+        getCharacterByName(name)
+            .then(onCharLoaded)
+            .then(() => setProcess('confirmed'))
     }
 
-    const errorMassage = error ? <div className="char__search-critical-error"><ErrorMassage /></div> : null;
+    const errorMassage = process === 'error' ? <div className="char__search-critical-error"><ErrorMassage /></div> : null;
     const results = !char ? null : char.length > 0 ? null : 
                     <div className="char__search-error">
                         The character was not found. Check the name and try again
@@ -53,7 +55,7 @@ const CharSearchForm = ({onCharSelected}) => {
                         <button 
                             type='submit' 
                             className="button button__main"
-                            disabled={loading}>
+                            disabled={process === 'loading'}>
                             <div className="inner">find</div>
                         </button>
                     </div>

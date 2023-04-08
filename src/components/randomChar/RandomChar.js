@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import MarvelService from '../../services/MarvelService';
-import Spinner from '../spinner/Spinner';
+import setContent from '../../utils/setContent';
 import mjolnir from '../../assets/img/mjolnir.png'
 import './randomChar.scss'
-import ErrorMassage from '../errorMassage/ErrorMassage';
 
 const RandomChar = () => {
     const [char, setChar] = useState({});
-    const {loading, error, clearError, getCharacter} = MarvelService();
+    const {process, setProcess, clearError, getCharacter} = MarvelService();
 
     const onCharLoaded = (char) => {
         setChar(char);
@@ -15,7 +14,9 @@ const RandomChar = () => {
     const updateChar = () => {
         clearError();
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000)
-        getCharacter(id).then(onCharLoaded)
+        getCharacter(id)
+            .then(onCharLoaded)
+            .then(() => setProcess('confirmed'))
     }
 
     useEffect(() => {
@@ -26,14 +27,9 @@ const RandomChar = () => {
         // }
     }, [])
 
-    const errorMassage = error ? <ErrorMassage /> : null;
-    const spinner = loading ? <Spinner /> : null;
-    const content = !(error || loading) ? <View char={char} /> : null;
     return ( 
         <div className="randomchar">
-            {errorMassage}
-            {spinner}
-            {content}
+            {setContent(process, View, char)}
             <div className="randomchar__static">
                 <p className="randomchar__title">
                     Random character for today!<br/>
@@ -51,20 +47,21 @@ const RandomChar = () => {
      );
 }
 
-const View = ({char}) =>{
+const View = ({data}) =>{
+    const {name, description, thumbnail, homepage, wiki} = data;
     return(
         <div className="randomchar__block">
-            <img src={char.thumbnail} alt="Random character" className="randomchar__img"/>
+            <img src={thumbnail} alt="Random character" className="randomchar__img"/>
             <div className="randomchar__info">
-                <p className="randomchar__name">{char.name}</p>
+                <p className="randomchar__name">{name}</p>
                 <p className="randomchar__descr">
-                    {char.description}
+                    {description}
                 </p>
                 <div className="randomchar__btns">
-                    <a href={char.homepage} className="button button__main">
+                    <a href={homepage} className="button button__main">
                         <div className="inner">homepage</div>
                     </a>
-                    <a href={char.wiki} className="button button__secondary">
+                    <a href={wiki} className="button button__secondary">
                         <div className="inner">Wiki</div>
                     </a>
                 </div>

@@ -1,17 +1,32 @@
-import { useState, useEffect, useRef } from 'react';
-import {CSSTransition, TransitionGroup} from 'react-transition-group';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import MarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import ErrorMassage from '../errorMassage/ErrorMassage';
 import './charList.scss'
+
+const setContent = (process, Component, newItemLoading) => {
+    switch (process) {
+        case 'waiting':
+            return <Spinner/>;
+        case 'loading':
+            return newItemLoading ? <Component/> : <Spinner/>;
+        case 'confirmed':
+            return <Component/>;
+        case 'error':
+            return <ErrorMassage/>;
+        default:
+            throw new Error('Unexpected process state');
+    }
+}
 
 
 const CharList = (props) => {
     const [chars, setChars] = useState([]);
     const [newItemLoading, setNewItemLoading] = useState(false);
     const [offset, setOffset] = useState(210);
+    const [charEnded, setCharEnded] = useState(false);
 
-    const {error, loading, getAllCharacters} = MarvelService();
+    const {process, setProcess, getAllCharacters} = MarvelService();
 
     useEffect(() => {
         onRequest(offset, true);
@@ -20,10 +35,16 @@ const CharList = (props) => {
 
     const onRequest = (offset, initial) => {
         initial ? setNewItemLoading(false) : setNewItemLoading(true)
-        getAllCharacters(offset).then(onCharsLoaded)
+        getAllCharacters(offset)
+            .then(onCharsLoaded)
+            .then(() => setProcess('confirmed'));
     }
     
-    const onCharsLoaded = (newChars) => {
+    const onCharsLoaded = async (newChars) => {
+        let ended = false;
+        if (newChars.length < 9) {
+            ended = true;
+        }
         setChars(chars => [...chars, ...newChars]);
         setNewItemLoading(false);
         setOffset(offset => offset + 9);
@@ -46,43 +67,37 @@ const CharList = (props) => {
             }
             
             return (
-                <CSSTransition key={item.id} timeout={500} classNames="char__item">
-                    <li 
-                        className="char__item"
-                        key={item.id}
-                        ref={el => itemRefs.current[i] = el}
-                        onClick={() => {
-                            props.onCharSelected(item.id)
-                            onFocusChar(i)
-                        }}
-                    >
-                            <img src={item.thumbnail} alt={item.name} style={imgStyle}/>
-                            <div className="char__name">{item.name}</div>
-                    </li>
-                </CSSTransition>
-
+                <li 
+                    className="char__item"
+                    key={item.id}
+                    ref={el => itemRefs.current[i] = el}
+                    onClick={() => {
+                        props.onCharSelected(item.id)
+                        onFocusChar(i)
+                    }}
+                >
+                        <img src={item.thumbnail} alt={item.name} style={imgStyle}/>
+                        <div className="char__name">{item.name}</div>
+                </li>
             );
         });
         return (
             <ul className="char__grid">
-                <TransitionGroup component={null}>
-                    {chars}
-                </TransitionGroup>
+                {chars}
             </ul>
         )
     }
+    const elements = useMemo(() => {
+        return setContent(process, () => charRender(chars), newItemLoading);
+    }, [process])
 
-    const items = charRender(chars);
-    const errorMessage = error ? <ErrorMassage/> : null;
-    const spinner = loading && !newItemLoading ? <Spinner/> : null;
     return (
         <div className="char__list">
-            {items}
-            {spinner}
-            {errorMessage}
+            {elements}
             <button 
                 className="button button__main button__long"
                 disabled={newItemLoading}
+                style={{'display' : charEnded ? 'none' : 'block'}}
                 onClick={() => onRequest(offset)}
             >
                 <div className="inner">load more</div>
