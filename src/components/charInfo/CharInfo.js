@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import MarvelService from '../../services/MarvelService';
 import setContent from '../../utils/setContent';
+import arrow from '../../assets/img/arrow-right-svgrepo-com.svg'
 import './charInfo.scss'
-import { Link } from 'react-router-dom';
 
 const CharInfo = (props) => {
 
@@ -41,7 +42,7 @@ const View = ({data}) => {
     const {name, description, thumbnail, homepage, wiki, comics} = data;
     return (
         <>
-            <div className="char__basics">
+            <div id='char__basics' className="char__basics">
                 <img src={thumbnail} alt={name}/>
                 <div>
                     <div className="char__info-name">{name}</div>
@@ -67,6 +68,7 @@ const View = ({data}) => {
                     return (
                         <Link to={`/comics/${comicId}`} className="char__comics-item" key={i}>
                             {item.name}
+                            <img src={arrow} alt="arrow" />
                         </Link>
                     )
                 })}

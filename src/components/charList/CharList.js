@@ -68,17 +68,20 @@ const CharList = (props) => {
             }
             
             return (
-                <li 
-                    className="char__item"
-                    key={item.id}
-                    ref={el => itemRefs.current[i] = el}
-                    onClick={() => {
-                        props.onCharSelected(item.id)
-                        onFocusChar(i)
-                    }}
-                >
-                        <img src={item.thumbnail} alt={item.name} style={imgStyle}/>
-                        <div className="char__name">{item.name}</div>
+                <li>
+                    <a 
+                        href='#char__basics'
+                        className="char__item"
+                        key={item.id}
+                        ref={el => itemRefs.current[i] = el}
+                        onClick={() => {
+                            props.onCharSelected(item.id)
+                            onFocusChar(i)
+                        }}
+                    >
+                            <img src={item.thumbnail} alt={item.name} style={imgStyle}/>
+                            <div className="char__name">{item.name}</div>
+                    </a>
                 </li>
             );
         });
